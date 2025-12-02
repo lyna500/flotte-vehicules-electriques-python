@@ -15,7 +15,7 @@ class Vehicule:
         self.statut = "disponible"
 
     def afficher_resume(self):
-        return f"{self.id} - {self.marque} {self.modele} ({self.statut})"
+        return f"{self.id} - {self.marque} {self.modele} | Statut: {self.statut} | Km: {self.kilometrage} | Charge: {self._niveau_charge}%"
 
     @property
     def niveau_charge(self):
@@ -37,6 +37,9 @@ class Utilisateur:
         self.nom = nom
         self.email = email
 
+    def afficher_resume(self):
+        return f"{self.id} - {self.nom} ({self.email})"
+
 class Client(Utilisateur):
     def __init__(self, nom, email, permis):
         super().__init__(nom, email)
@@ -53,6 +56,9 @@ class Location:
         self.date_debut = date_debut or datetime.now()
         self.date_fin = None
 
+    def terminer(self):
+        self.date_fin = datetime.now()
+
 class Maintenance:
     def __init__(self, vehicule_id, type_op, cout, date=None):
         self.vehicule_id = vehicule_id
@@ -61,3 +67,5 @@ class Maintenance:
         self.date = date or datetime.now()
         self.terminee = False
 
+    def valider(self):
+        self.terminee = True
