@@ -44,11 +44,19 @@ class Client(Utilisateur):
     def __init__(self, nom, email, permis):
         super().__init__(nom, email)
         self.permis = permis
-
+    def to_dict(self):
+        data = super().to_dict()
+        data["type"] = "client"
+        data["permis"] = self.permis
+        return data
 class Gestionnaire(Utilisateur):
     def __init__(self, nom, email):
         super().__init__(nom, email)
-
+    
+    def to_dict(self):
+        data = super().to_dict()
+        data["type"] = "gestionnaire"
+        return data
 class Location:
     def __init__(self, client_id, vehicule_id, date_debut=None):
         self.client_id = client_id
