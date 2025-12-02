@@ -19,4 +19,3 @@ def stats_vehicules(vehicules):
     plt.close()
 
 
-
