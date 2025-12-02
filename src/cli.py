@@ -86,8 +86,13 @@ def menu_principal():
             sub = input("Choix : ")
             if sub == "1":
                 persistence.sauvegarder_json(flotte.vehicules, "data/vehicules.json")
+                persistence.sauvegarder_json(list(flotte.utilisateurs.values()), "data/utilisateurs.json")
+
             elif sub == "2":
-                flotte.vehicules = persistence.charger_json(Vehicule, "data/vehicules.json")
+                flotte.vehicules = persistence.charger_json(Vehicule, "data/vehicules.json") 
+                utilisateurs = persistence.charger_json(dict, "data/utilisateurs.json")
+                flotte.utilisateurs = {u["id"]: u for u in utilisateurs}
+
 
         # --- Statistiques ---
         elif choix == "6":
@@ -98,4 +103,5 @@ def menu_principal():
 
 if __name__ == "__main__":
     menu_principal()
+
 
