@@ -54,7 +54,7 @@ class Flotte:
             print(u.afficher_resume())
 
     # --- Locations ---
-    def demarrer_location(self, client_id, vehicule_id):
+    def demarrer_location(self, client_id, vehicule_id, estimation_km=None, estimation_charge=None):
         vehicule = self.rechercher_vehicule_par_id(vehicule_id)
         if not vehicule:
             print("Véhicule introuvable.")
@@ -64,23 +64,46 @@ class Flotte:
             return
         vehicule.statut = "loué"
         loc = Location(client_id, vehicule_id)
+        loc.estimation_km = estimation_km
+        loc.estimation_charge = estimation_charge
         self.locations.setdefault(client_id, []).append(loc)
-        print(f"Location démarrée : {vehicule.afficher_resume()}")
 
-    def terminer_location(self, client_id, vehicule_id, km_parcourus, niveau_charge):
+        print("Location démarrée :")
+        print(f"- Véhicule : {vehicule.marque} {vehicule.modele} (ID {vehicule.id})")
+        print(f"- Statut : {vehicule.statut}")
+        print(f"- Date/heure départ : {loc.date_debut}")
+        if estimation_km:
+            print(f"- Estimation km : {estimation_km}")
+        if estimation_charge:
+            print(f"- Estimation charge : {estimation_charge}%")
+
+    def terminer_location(self, client_id, vehicule_id, km_parcourus, niveau_charge, jours_max=7, penalite_par_jour=10):
         locs = self.locations.get(client_id, [])
         for loc in locs:
             if loc.vehicule_id == vehicule_id and loc.date_fin is None:
                 loc.terminer()
                 vehicule = self.rechercher_vehicule_par_id(vehicule_id)
                 vehicule.kilometrage += km_parcourus
-                vehicule.niveau_charge = niveau_charge
+                vehicule.niveau_charge = min(max(niveau_charge, 0), 100)
                 vehicule.statut = "disponible"
-                print(f"Location terminée : {vehicule.afficher_resume()}")
+
+                duree_jours = (loc.date_fin - loc.date_debut).days
+                penalite = 0
+                if duree_jours > jours_max:
+                    penalite = (duree_jours - jours_max) * penalite_par_jour
+
+                print("Location terminée :")
+                print(f"- Véhicule : {vehicule.marque} {vehicule.modele} (ID {vehicule.id})")
+                print(f"- Statut : {vehicule.statut}")
+                print(f"- Km parcourus : {km_parcourus}")
+                print(f"- Niveau de charge : {niveau_charge}%")
+                print(f"- Date/heure retour : {loc.date_fin}")
+                if penalite > 0:
+                    print(f"- Attention : dépassement {jours_max} jours. Pénalité = {penalite} unités")
                 return
         print("Location non trouvée ou déjà terminée.")
 
-    # --- Maintenances ---
+    # --- Maintenance ---
     def ajouter_maintenance(self, maintenance):
         self.maintenances.append(maintenance)
         vehicule = self.rechercher_vehicule_par_id(maintenance.vehicule_id)
@@ -96,4 +119,21 @@ class Flotte:
                 if vehicule:
                     vehicule.statut = "disponible"
                 print(f"Maintenance validée pour {vehicule.afficher_resume()}")
+
+    # --- Vérification maintenance automatique ---
+    def verifier_maintenance(self, km_seuil=10000, charge_min=20):
+        for v in self.vehicules:
+            if v.statut == "disponible":
+                besoin = False
+                raison = []
+                if v.kilometrage > km_seuil:
+                    besoin = True
+                    raison.append("kilométrage élevé")
+                if v.niveau_charge < charge_min:
+                    besoin = True
+                    raison.append("niveau de charge faible")
+                if besoin:
+                    m = Maintenance(v.id, type_op="contrôle automatique", cout=0)
+                    self.ajouter_maintenance(m)
+                    print(f"Véhicule {v.id} envoyé en maintenance ({', '.join(raison)})")
 
