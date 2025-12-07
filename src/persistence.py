@@ -31,4 +31,3 @@ def sauvegarder_csv(objets, fichier):
         print(f"CSV sauvegardé avec succès : {fichier}")
     except Exception as e:
         print("Erreur CSV :", e)
-
