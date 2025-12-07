@@ -32,10 +32,14 @@ class Flotte:
 
     def rechercher_vehicule(self, marque=None, modele=None, autonomie=None, statut=None):
         result = self.vehicules
-        if marque: result = [v for v in result if v.marque.lower() == marque.lower()]
-        if modele: result = [v for v in result if v.modele.lower() == modele.lower()]
-        if autonomie: result = [v for v in result if v.autonomie >= autonomie]
-        if statut: result = [v for v in result if v.statut.lower() == statut.lower()]
+        if marque:
+            result = [v for v in result if v.marque.lower() == marque.lower()]
+        if modele:
+            result = [v for v in result if v.modele.lower() == modele.lower()]
+        if autonomie:
+            result = [v for v in result if v.autonomie >= autonomie]
+        if statut:
+            result = [v for v in result if v.statut.lower() == statut.lower()]
         return result
 
     def afficher_vehicules(self):
@@ -62,6 +66,7 @@ class Flotte:
         if vehicule.statut != "disponible":
             print("Véhicule non disponible.")
             return
+
         vehicule.statut = "loué"
         loc = Location(client_id, vehicule_id)
         loc.estimation_km = estimation_km
@@ -84,7 +89,9 @@ class Flotte:
                 loc.terminer()
                 vehicule = self.rechercher_vehicule_par_id(vehicule_id)
                 vehicule.kilometrage += km_parcourus
-                vehicule.niveau_charge = min(max(niveau_charge, 0), 100)
+
+                # Limiter niveau_charge entre 0 et 100
+                vehicule.niveau_charge = max(0, min(100, niveau_charge))
                 vehicule.statut = "disponible"
 
                 duree_jours = (loc.date_fin - loc.date_debut).days
@@ -96,7 +103,7 @@ class Flotte:
                 print(f"- Véhicule : {vehicule.marque} {vehicule.modele} (ID {vehicule.id})")
                 print(f"- Statut : {vehicule.statut}")
                 print(f"- Km parcourus : {km_parcourus}")
-                print(f"- Niveau de charge : {niveau_charge}%")
+                print(f"- Niveau de charge : {vehicule.niveau_charge}%")
                 print(f"- Date/heure retour : {loc.date_fin}")
                 if penalite > 0:
                     print(f"- Attention : dépassement {jours_max} jours. Pénalité = {penalite} unités")
@@ -109,7 +116,7 @@ class Flotte:
         vehicule = self.rechercher_vehicule_par_id(maintenance.vehicule_id)
         if vehicule:
             vehicule.statut = "maintenance"
-        print(f"Maintenance ajoutée pour {vehicule.afficher_resume()}")
+            print(f"Maintenance ajoutée pour {vehicule.afficher_resume()}")
 
     def valider_maintenance(self, vehicule_id):
         for m in self.maintenances:
@@ -118,7 +125,7 @@ class Flotte:
                 vehicule = self.rechercher_vehicule_par_id(vehicule_id)
                 if vehicule:
                     vehicule.statut = "disponible"
-                print(f"Maintenance validée pour {vehicule.afficher_resume()}")
+                    print(f"Maintenance validée pour {vehicule.afficher_resume()}")
 
     # --- Vérification maintenance automatique ---
     def verifier_maintenance(self, km_seuil=10000, charge_min=20):
@@ -136,4 +143,3 @@ class Flotte:
                     m = Maintenance(v.id, type_op="contrôle automatique", cout=0)
                     self.ajouter_maintenance(m)
                     print(f"Véhicule {v.id} envoyé en maintenance ({', '.join(raison)})")
-
