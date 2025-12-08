@@ -147,13 +147,15 @@ def menu_principal():
                         print("Aucune location pour ce client.")
                         continue
                     for loc in locs:
-                        print(f"Véhicule {loc.vehicule_id} | Début: {loc.date_debut} | Fin: {loc.date_fin}")
+                        penalite_str = f" | Pénalité : {loc.penalite} €" if getattr(loc, "penalite", 0) > 0 else ""
+                        print(f"Véhicule {loc.vehicule_id} | Début: {loc.date_debut} | Fin: {loc.date_fin}{penalite_str}")
                 except ValueError:
                     print("Erreur de saisie.")
 
+
         # --- MAINTENANCE ---
         elif choix == "4":
-            print("1: Ajouter maintenance | 2: Valider maintenance | 3: Maintenance automatique")
+            print("1: Ajouter maintenance | 2: Valider maintenance | 3: Maintenance automatique | 4: Véhicules en maintenance | 5: Logs maintenance")
             sub = input("Choix : ").strip()
             if sub == "1":
                 try:
@@ -172,6 +174,11 @@ def menu_principal():
                     print("Erreur de saisie.")
             elif sub == "3":
                 flotte.verifier_maintenance()
+            elif sub == "4":
+                    flotte.afficher_vehicules_en_maintenance()
+            elif sub == "5":
+                flotte.afficher_logs_maintenance()
+
 
         # --- SAUVEGARDE / CHARGEMENT ---
         elif choix == "5":

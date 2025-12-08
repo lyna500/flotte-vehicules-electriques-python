@@ -82,22 +82,20 @@ class Flotte:
         if estimation_charge:
             print(f"- Estimation charge : {estimation_charge}%")
 
-    def terminer_location(self, client_id, vehicule_id, km_parcourus, niveau_charge, jours_max=7, penalite_par_jour=10):
+    def terminer_location(self, client_id, vehicule_id, km_parcourus, niveau_charge, jours_max=7, penalite_par_jour=100):
         locs = self.locations.get(client_id, [])
         for loc in locs:
             if loc.vehicule_id == vehicule_id and loc.date_fin is None:
                 loc.terminer()
                 vehicule = self.rechercher_vehicule_par_id(vehicule_id)
                 vehicule.kilometrage += km_parcourus
-
-                # Limiter niveau_charge entre 0 et 100
                 vehicule.niveau_charge = max(0, min(100, niveau_charge))
                 vehicule.statut = "disponible"
 
                 duree_jours = (loc.date_fin - loc.date_debut).days
-                penalite = 0
+                loc.penalite = 0
                 if duree_jours > jours_max:
-                    penalite = (duree_jours - jours_max) * penalite_par_jour
+                    loc.penalite = (duree_jours - jours_max) * penalite_par_jour
 
                 print("Location terminée :")
                 print(f"- Véhicule : {vehicule.marque} {vehicule.modele} (ID {vehicule.id})")
@@ -105,8 +103,8 @@ class Flotte:
                 print(f"- Km parcourus : {km_parcourus}")
                 print(f"- Niveau de charge : {vehicule.niveau_charge}%")
                 print(f"- Date/heure retour : {loc.date_fin}")
-                if penalite > 0:
-                    print(f"- Attention : dépassement {jours_max} jours. Pénalité = {penalite} unités")
+                if loc.penalite > 0:
+                    print(f"- Attention : dépassement {jours_max} jours. Pénalité = {loc.penalite} €")
                 return
         print("Location non trouvée ou déjà terminée.")
 
@@ -143,3 +141,15 @@ class Flotte:
                     m = Maintenance(v.id, type_op="contrôle automatique", cout=0)
                     self.ajouter_maintenance(m)
                     print(f"Véhicule {v.id} envoyé en maintenance ({', '.join(raison)})")
+
+
+    def afficher_vehicules_en_maintenance(self):
+        for v in self.vehicules:
+            if v.statut == "maintenance":
+                print(v.afficher_resume())
+
+    def afficher_logs_maintenance(self):
+        for m in self.maintenances:
+            etat = "terminée" if m.terminee else "en cours"
+            print(f"Véhicule {m.vehicule_id} | {m.type_op} | Coût {m.cout} | {m.date} | {etat}")
+

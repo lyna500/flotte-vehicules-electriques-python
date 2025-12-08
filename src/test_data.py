@@ -27,12 +27,12 @@ def charger_donnees_test(flotte):
     flotte.ajouter_utilisateur(c2)
     flotte.ajouter_utilisateur(g1)
 
-    loc1 = Location(c1.id, v1.id, datetime(2025, 1, 3, 9, 0))
-    loc1.date_fin = datetime(2025, 1, 8, 10, 30)
-    loc1.estimation_km = 300
-    loc1.estimation_charge = 70
-    v1.kilometrage += 320
+    loc1 = Location(c1.id, v1.id, datetime(2025, 11, 29, 9, 0))
     flotte.locations.setdefault(c1.id, []).append(loc1)
+
+    # termine la location et calcule pénalité
+    flotte.terminer_location(c1.id, v1.id, km_parcourus=320, niveau_charge=70)
+
 
     loc2 = Location(c2.id, v2.id, datetime(2025, 2, 12, 14, 0))
     loc2.estimation_km = 150
