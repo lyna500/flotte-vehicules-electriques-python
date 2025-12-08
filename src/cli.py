@@ -1,11 +1,14 @@
 from flotte import Flotte
 from models import Vehicule, Client, Gestionnaire, Location, Maintenance
+from test_data import charger_donnees_test
 import persistence
 import analytics
 import os
 
 def menu_principal():
     flotte = Flotte()
+
+    charger_donnees_test(flotte)
 
     while True:
         print("""
