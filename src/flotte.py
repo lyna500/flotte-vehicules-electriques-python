@@ -8,7 +8,7 @@ class Flotte:
         self.locations = {}  # clé = client_id, valeur = liste de Location
         self.maintenances = []
 
-    # --- Véhicules ---
+    #Véhicules 
     def ajouter_vehicule(self, vehicule):
         self.vehicules.append(vehicule)
 
@@ -46,7 +46,7 @@ class Flotte:
         for v in self.vehicules:
             print(v.afficher_resume())
 
-    # --- Utilisateurs ---
+    # Utilisateurs 
     def ajouter_utilisateur(self, utilisateur):
         self.utilisateurs[utilisateur.id] = utilisateur
 
@@ -57,7 +57,7 @@ class Flotte:
         for u in self.utilisateurs.values():
             print(u.afficher_resume())
 
-    # --- Locations ---
+    #Locations 
     def demarrer_location(self, client_id, vehicule_id, estimation_km=None, estimation_charge=None):
         vehicule = self.rechercher_vehicule_par_id(vehicule_id)
         if not vehicule:
@@ -108,7 +108,7 @@ class Flotte:
                 return
         print("Location non trouvée ou déjà terminée.")
 
-    # --- Maintenance ---
+    #Maintenance 
     def ajouter_maintenance(self, maintenance):
         self.maintenances.append(maintenance)
         vehicule = self.rechercher_vehicule_par_id(maintenance.vehicule_id)
@@ -125,7 +125,7 @@ class Flotte:
                     vehicule.statut = "disponible"
                     print(f"Maintenance validée pour {vehicule.afficher_resume()}")
 
-    # --- Vérification maintenance automatique ---
+    #Vérification maintenance automatique 
     def verifier_maintenance(self, km_seuil=10000, charge_min=20):
         for v in self.vehicules:
             if v.statut == "disponible":
