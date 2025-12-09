@@ -105,12 +105,12 @@ flotte-vehicules/
 │   ├── maintenances.json
 │
 ├── README.md
-└── requirements.txt
 
 
 
 
- 3. Points techniques clés (POO)
+
+ 4. Points techniques clés (POO)
  Encapsulation & @property
 
 Le niveau de charge est protégé :
