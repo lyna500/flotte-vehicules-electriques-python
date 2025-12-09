@@ -18,7 +18,7 @@ Menu CLI interactif
 
  1. Fonctionnalités principales
  
- 🔹Gestion des véhicules:
+ -Gestion des véhicules:
  
  Ajouter, modifier, supprimer un véhicule.
 Afficher tous les véhicules.
@@ -26,13 +26,11 @@ Rechercher un véhicule par :ID ,modèle,autonomie,statut (disponible / loué / 
 
 Caractéristiques gérées :ID unique auto-incrémenté,marque, modèle,capacité batterie et autonomie estimée,niveau de charge (%),kilométrage,statut du véhicule
 
-🔹 Gestion des utilisateurs
+-Gestion des utilisateurs
 
 Deux types d’utilisateurs :
 
-Client (locataire)
-
-Gestionnaire
+Client/Gestionnaire
 
 Chaque utilisateur possède :
 
@@ -46,13 +44,8 @@ type (Client ou Gestionnaire)
 
 données optionnelles : permis, mode de paiement
 
-Architecture avec héritage :
 
-Utilisateur
- ├── Client
- └── Gestionnaire
-
-🔹 Gestion des locations
+-Gestion des locations
 
 Un client peut louer un véhicule disponible.
 
@@ -76,7 +69,7 @@ Les locations sont stockées sous forme de dictionnaire :
 
 { id_client : [liste des locations] }
 
-🔹 Gestion de la maintenance
+- Gestion de la maintenance
 
 Enregistrer des opérations : date, type, coût.
 
@@ -226,50 +219,21 @@ Menu principal :
 
  
 
- 8. Installation & Exécution
-
-Python 3.10+
-
-pip (installé par défaut avec Python)
-
-✔ Cloner ou télécharger le projet
-git clone https://github.com/<votre_repo>/flotte-vehicules-electriques-python.git
-cd flotte-vehicules-electriques-python
 
 
-Si vous avez téléchargé un ZIP, extraire puis entrer dans le dossier :
+Installer les Bibliothèque	s :
 
-cd flotte-vehicules-electriques-python-main
-
-. Installation des dépendances
-
-Le projet utilise ces modules externes :
-
-Module	Utilité
-pandas	Manipulation et export de données
-matplotlib	Graphiques & statistiques
-csv	Gestion de fichiers CSV
-json	Sauvegarde et chargement JSON
-
-Installer les dépendances :
-
-pip install pandas matplotlib
+json:Sauvegarde et chargement des données en JSON (véhicules, utilisateurs, locations…)
+csv:Sauvegarde et chargement des données en CSV pour les tableaux ou exports Excel
+matplotlib.pyplot:Création de graphiques (barres, camemberts, lignes) pour visualiser les statistiques
+pandas (optionnel):Manipulation rapide et facile des tableaux de données pour filtrer, trier ou calculer des statistiques
+datetime:Gestion des dates et heures (début et fin des locations, calcul de pénalités)
+os (parfois):Gestion des chemins de fichiers, vérification si un fichier existe
+unittest (pour test.py):Pour tester automatiquement que les classes et fonctions fonctionnent correctement
+math (optionnel):Calculs mathématiques, par exemple pour l’autonomie ou les pourcentages
 
 
-Ou via un fichier requirements.txt (si fourni) :
 
-pip install -r requirements.txt
-
-. Exécution de l’application
-
-Depuis la racine du projet, lancer :
-
-python src/cli.py
-
-
-Sur Windows PowerShell :
-
-py src/cli.py
 
 
  11. Conclusion
@@ -290,13 +254,5 @@ Possibilité d’extension en GUI (Tkinter)
 
 L’application fournit une solution fonctionnelle et évolutive pour gérer une flotte de véhicules électriques.
 
-Bibliothèque	
-json:Sauvegarde et chargement des données en JSON (véhicules, utilisateurs, locations…)
-csv:Sauvegarde et chargement des données en CSV pour les tableaux ou exports Excel
-matplotlib.pyplot:Création de graphiques (barres, camemberts, lignes) pour visualiser les statistiques
-pandas (optionnel):Manipulation rapide et facile des tableaux de données pour filtrer, trier ou calculer des statistiques
-datetime:Gestion des dates et heures (début et fin des locations, calcul de pénalités)
-os (parfois):Gestion des chemins de fichiers, vérification si un fichier existe
-unittest (pour test.py):Pour tester automatiquement que les classes et fonctions fonctionnent correctement
-math (optionnel):Calculs mathématiques, par exemple pour l’autonomie ou les pourcentages
+
 
