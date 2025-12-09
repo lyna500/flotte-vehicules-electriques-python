@@ -33,9 +33,9 @@ def menu_principal():
                 while True:
                     try:
                         batterie = int(input("Batterie (kWh) : "))
-                        if 10 <= batterie <= 150:
+                        if 10 <= batterie <= 100:
                             break
-                        print("Erreur : batterie 10-150 kWh")
+                        print("Erreur : batterie 10-100 kWh")
                     except ValueError:
                         print("Erreur : nombre entier")
                 while True:
