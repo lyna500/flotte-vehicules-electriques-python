@@ -1,7 +1,6 @@
 
 # Projet Python – Gestion d'une flotte de véhicules électriques
 
-# Projet Python – Gestion d'une flotte de véhicules électriques
 
 
 Ce projet est une application complète en Python permettant de gérer une flotte de véhicules électriques pour une entreprise de location courte durée.
@@ -290,3 +289,14 @@ Modularité du code
 Possibilité d’extension en GUI (Tkinter)
 
 L’application fournit une solution fonctionnelle et évolutive pour gérer une flotte de véhicules électriques.
+
+Bibliothèque	
+json:Sauvegarde et chargement des données en JSON (véhicules, utilisateurs, locations…)
+csv:Sauvegarde et chargement des données en CSV pour les tableaux ou exports Excel
+matplotlib.pyplot:Création de graphiques (barres, camemberts, lignes) pour visualiser les statistiques
+pandas (optionnel):Manipulation rapide et facile des tableaux de données pour filtrer, trier ou calculer des statistiques
+datetime:Gestion des dates et heures (début et fin des locations, calcul de pénalités)
+os (parfois):Gestion des chemins de fichiers, vérification si un fichier existe
+unittest (pour test.py):Pour tester automatiquement que les classes et fonctions fonctionnent correctement
+math (optionnel):Calculs mathématiques, par exemple pour l’autonomie ou les pourcentages
+
