@@ -20,7 +20,7 @@ def menu_principal():
 6. Statistiques & Visualisations
 7. Quitter
         """)
-        choix = input("Votre choix : ").strip()
+        choix = input("Votre choix : ").strip() 
 
         # --- VÉHICULES ---
         if choix == "1":
