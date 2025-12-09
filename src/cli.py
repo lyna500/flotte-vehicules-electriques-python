@@ -22,7 +22,7 @@ def menu_principal():
         """)
         choix = input("Votre choix : ").strip() 
 
-        # --- VÉHICULES ---
+        # VÉHICULES 
         if choix == "1":
             print("1: Ajouter | 2: Modifier | 3: Supprimer | 4: Afficher | 5: Rechercher")
             sub = input("Choix : ").strip()
@@ -94,7 +94,7 @@ def menu_principal():
                 for v in result:
                     print(v.afficher_resume())
 
-        # --- UTILISATEURS ---
+        #  UTILISATEURS 
         elif choix == "2":
             print("1: Ajouter utilisateur | 2: Afficher utilisateurs")
             sub = input("Choix : ").strip()
@@ -112,7 +112,7 @@ def menu_principal():
             elif sub == "2":
                 flotte.afficher_utilisateurs()
 
-        # --- LOCATIONS ---
+        # LOCATIONS 
         elif choix == "3":
             print("1: Démarrer location | 2: Terminer location | 3: Historique locations client")
             sub = input("Choix : ").strip()
@@ -153,7 +153,7 @@ def menu_principal():
                     print("Erreur de saisie.")
 
 
-        # --- MAINTENANCE ---
+        # MAINTENANCE 
         elif choix == "4":
             print("1: Ajouter maintenance | 2: Valider maintenance | 3: Maintenance automatique | 4: Véhicules en maintenance | 5: Logs maintenance")
             sub = input("Choix : ").strip()
@@ -180,7 +180,7 @@ def menu_principal():
                 flotte.afficher_logs_maintenance()
 
 
-        # --- SAUVEGARDE / CHARGEMENT ---
+        # SAUVEGARDE / CHARGEMENT 
         elif choix == "5":
             print("1: Sauvegarder JSON | 2: Charger JSON | 3: Sauvegarder CSV | 4: Charger CSV")
             sub = input("Choix : ").strip()
@@ -232,11 +232,11 @@ def menu_principal():
                         flotte.utilisateurs[u["id"]] = Gestionnaire.from_dict(u)
                 print("CSV chargé pour véhicules et utilisateurs.")
 
-        # --- STATISTIQUES ---
+        #  STATISTIQUES 
         elif choix == "6":
             analytics.stats_vehicules(flotte.vehicules)
 
-        # --- QUITTER ---
+        # QUITTER 
         elif choix == "7":
             break
 
