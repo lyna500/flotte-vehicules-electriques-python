@@ -11,19 +11,19 @@ Ce projet est une application Python complète permettant de gérer une flotte d
 
 Elle inclut :
 
-✔ Programmation orientée objet (POO)
+-Programmation orientée objet (POO)
 
-✔ Gestion des véhicules, utilisateurs, locations et maintenances
+-Gestion des véhicules, utilisateurs, locations et maintenances
 
-✔ Sauvegarde et chargement JSON/CSV
+-Sauvegarde et chargement JSON/CSV
 
-✔ Analyses statistiques (pandas)
+-Analyses statistiques (pandas)
 
-✔ Graphiques (matplotlib)
+-Graphiques (matplotlib)
 
-✔ Interface en ligne de commande (CLI)
+-Interface en ligne de commande (CLI)
 
-✔ Bonus : début d’intégration Tkinter (GUI)
+-Bonus : début d’intégration Tkinter (GUI)
 
 1.  Fonctionnalités
 Gestion des véhicules
@@ -153,23 +153,23 @@ flotte-vehicules/
 └── requirements.txt
 
 3.  Concepts POO utilisés
-✔ Encapsulation
+-Encapsulation
 
 Gestion protégée du niveau de charge via @property.
 
-✔ Héritage
+- Héritage
 
 Utilisateur → Client, Gestionnaire.
 
-✔ Polymorphisme
+- Polymorphisme
 
 Méthodes comme afficher_resume() selon le type d’objet.
 
-✔ Sérialisation
+- Sérialisation
 
 Méthodes to_dict() et from_dict() pour sauvegarde JSON/CSV.
 
-✔ Gestion d’ID
+- Gestion d’ID
 
 Remise à jour des compteurs d’ID après rechargement (_id_counter).
 
