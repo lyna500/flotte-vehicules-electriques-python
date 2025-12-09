@@ -1,6 +1,6 @@
 from datetime import datetime
 
-# ------------------ Véhicule ------------------
+# Véhicule 
 class Vehicule:
     _id_counter = 1
 
@@ -50,7 +50,7 @@ class Vehicule:
         v.statut = data.get("statut", "disponible")
         return v
 
-# ------------------ Utilisateur ------------------
+#Utilisateur
 class Utilisateur:
     _id_counter = 1
 
@@ -104,7 +104,7 @@ class Gestionnaire(Utilisateur):
         u.id = data["id"]
         return u
 
-# ------------------ Location ------------------
+#Location 
 class Location:
     def __init__(self, client_id, vehicule_id, date_debut=None):
         self.client_id = client_id
@@ -135,7 +135,7 @@ class Location:
         loc.estimation_charge = data.get("estimation_charge")
         return loc
 
-# ------------------ Maintenance ------------------
+# Maintenance 
 class Maintenance:
     def __init__(self, vehicule_id, type_op, cout, date=None):
         self.vehicule_id = vehicule_id
