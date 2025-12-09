@@ -1,6 +1,6 @@
 import json, csv
 
-# --- JSON ---
+#JSON 
 def sauvegarder_json(objets, fichier):
     try:
         with open(fichier, 'w') as f:
@@ -18,7 +18,7 @@ def charger_json(cls, fichier):
         print("Erreur chargement JSON :", e)
         return []
 
-# --- CSV ---
+# CSV 
 def sauvegarder_csv(objets, fichier):
     try:
         if not objets:
