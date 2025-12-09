@@ -4,182 +4,194 @@ LAMOUREUX Laura
 
 # Projet Python – Gestion d'une flotte de véhicules électriques
 
+Gestion d'une Flotte de Véhicules Électriques – Projet Python
 
 
-Ce projet est une application complète en Python permettant de gérer une flotte de véhicules électriques pour une entreprise de location courte durée.
-L’application utilise :
+Ce projet est une application Python complète permettant de gérer une flotte de véhicules électriques pour une entreprise de location courte durée.
 
-Programmation orientée objet (POO)
+Elle inclut :
 
-Sauvegarde/Chargement JSON & CSV
+✔ Programmation orientée objet (POO)
 
-Analyse et visualisation via pandas & matplotlib
+✔ Gestion des véhicules, utilisateurs, locations et maintenances
 
-Menu CLI interactif
+✔ Sauvegarde et chargement JSON/CSV
 
-(Bonus) Interface graphique Tkinter
+✔ Analyses statistiques (pandas)
 
- 1. Fonctionnalités principales
- 
- -Gestion des véhicules:
- 
- Ajouter, modifier, supprimer un véhicule.
-Afficher tous les véhicules.
-Rechercher un véhicule par :ID ,modèle,autonomie,statut (disponible / loué / maintenance)
+✔ Graphiques (matplotlib)
 
-Caractéristiques gérées :ID unique auto-incrémenté,marque, modèle,capacité batterie et autonomie estimée,niveau de charge (%),kilométrage,statut du véhicule
+✔ Interface en ligne de commande (CLI)
 
--Gestion des utilisateurs
+✔ Bonus : début d’intégration Tkinter (GUI)
 
-Deux types d’utilisateurs :
+1.  Fonctionnalités
+Gestion des véhicules
 
-Client/Gestionnaire
+Ajouter, modifier, supprimer un véhicule
+
+Afficher la liste complète
+
+Rechercher par :
+
+ID
+
+marque / modèle
+
+autonomie
+
+statut (disponible / loué / maintenance)
+
+Attributs gérés :
+
+ID auto-incrémenté
+
+marque, modèle
+
+capacité batterie (kWh)
+
+autonomie estimée (km)
+
+niveau de charge (%)
+
+kilométrage
+
+statut
+
+Gestion des utilisateurs
+
+Deux types :
+
+Client
+
+Gestionnaire
 
 Chaque utilisateur possède :
 
-un identifiant unique
+ID unique
 
-nom complet
+nom
 
 email
 
-type (Client ou Gestionnaire)
+type
 
-données optionnelles : permis, mode de paiement
+(optionnel) permis / mode de paiement
 
+Architecture POO :
 
--Gestion des locations
+Utilisateur
+ ├── Client
+ └── Gestionnaire
 
-Un client peut louer un véhicule disponible.
+Gestion des locations
+
+Un client peut louer un véhicule s’il est disponible.
+Le système enregistre :
 
 Au début :
 
-le véhicule passe en statut loué,
+statut → loué
 
-date/heure de départ enregistrées.
+date/heure de départ
+
+estimation charge/km (optionnel)
 
 Au retour :
 
-date/heure de fin enregistrées
+date/heure de fin
 
-kilomètres ajoutés
+kilomètres parcourus
 
 niveau de charge mis à jour
 
-pénalité si durée > 7 jours
+pénalité si > 7 jours
 
-Les locations sont stockées sous forme de dictionnaire :
+Stockage :
 
-{ id_client : [liste des locations] }
+{ id_client : [locations] }
 
-- Gestion de la maintenance
+Gestion de la maintenance
 
-Enregistrer des opérations : date, type, coût.
+Le système enregistre :
 
-Déclenchement automatique si :
+date
+
+type (batterie, freins, etc.)
+
+coût
+
+validation du gestionnaire
+
+Maintenance automatique si :
 
 kilométrage trop élevé
 
-sécurité insuffisante
-
 niveau de charge anormal
 
-Les gestionnaires valident et clôturent les maintenances.
+contrôle sécurité requis
 
-Remarque importante à dire en soutenance :
 
-La maintenance automatique fonctionne mais peut créer plusieurs maintenances identiques si appelée plusieurs fois. Amélioration prévue : vérifier si une maintenance similaire existe déjà.
-
- 2. Structure du projet
+2.  Structure du projet
 flotte-vehicules/
 │
 ├── src/
-│   ├── models.py          # Classes POO : Vehicule, Utilisateur, Client, Gestionnaire, Location, Maintenance
-│   ├── flotte.py          # Classe Flotte centrale
-│   ├── persistance.py     # Sauvegarde / Chargement JSON & CSV
-│   ├── analytics.py       # Analyse de données & Graphiques (pandas/matplotlib)
-│   ├── cli.py             # Menu interactif (interface en ligne de commande)
-│   ├── charger_donnees_test.py   # Données de test
+│   ├── models.py               # Classes POO (Vehicule, Utilisateur, Location, Maintenance)
+│   ├── flotte.py               # Classe centrale Flotte
+│   ├── persistance.py          # Sauvegarde & chargement JSON/CSV
+│   ├── analytics.py            # Statistiques & graphiques pandas/matplotlib
+│   ├── cli.py                  # Interface en ligne de commande (menu)
+│   ├── charger_donnees_test.py # Données de test automatiques
 │
-├── data/
+├── data/                       # Données enregistrées
 │   ├── vehicules.json
 │   ├── utilisateurs.json
 │   ├── locations.json
 │   ├── maintenances.json
 │
 ├── README.md
+└── requirements.txt
 
+3.  Concepts POO utilisés
+✔ Encapsulation
 
+Gestion protégée du niveau de charge via @property.
 
+✔ Héritage
 
+Utilisateur → Client, Gestionnaire.
 
- 4. Points techniques clés (POO)
- Encapsulation & @property
+✔ Polymorphisme
 
-Le niveau de charge est protégé :
+Méthodes comme afficher_resume() selon le type d’objet.
 
-@property
-def niveau_charge(self):
-    return self._niveau_charge
+✔ Sérialisation
 
-@niveau_charge.setter
-def niveau_charge(self, val):
-    self._niveau_charge = max(0, min(100, val))
+Méthodes to_dict() et from_dict() pour sauvegarde JSON/CSV.
 
+✔ Gestion d’ID
 
+Remise à jour des compteurs d’ID après rechargement (_id_counter).
 
+4.  Sauvegarde & Chargement
 
-Sérialisation : to_dict() et from_dict()
+Dans persistance.py :
 
-Les objets sont convertis en dictionnaires pour être enregistrés.
-
-def to_dict(self):
-    return {
-        "id": self.id,
-        "marque": self.marque,
-        ...
-    }
-
-
-Et reconstruits avec :
-
-@classmethod
-def from_dict(cls, data):
-    return cls(**data)
-
-
-Ce que ça permet :
-
-sauvegarder facilement en JSON/CSV
-
-charger les objets complets dans la flotte
-
-
-Lorsque from_dict() recharge un objet avec un ID déjà défini, il faut ensuite mettre :
-
-Vehicule._id_counter = max(id existants) + 1
-
-
-Pour éviter les collisions d’ID quand on ajoute de nouveaux objets.
-
- 4. Sauvegarde & Chargement
-
-Fonctions dans persistance.py :
-
-JSON
+Sauvegarde JSON
 sauvegarder_json(objets, fichier)
+
+Chargement JSON
 charger_json(cls, fichier)
 
-CSV
+Sauvegarde CSV
 sauvegarder_csv(objets, fichier)
 
 
-Technique utilisée :
-o.__dict__ ou o.to_dict() pour transformer objets → dictionnaires.
+Utilisation de __dict__ pour convertir objets → dictionnaires.
 
-5. Statistiques & Visualisation (pandas & matplotlib)
+5.  Statistiques & Graphiques
 
-Dans analytics.py, plusieurs analyses sont proposées :
+Dans analytics.py :
 
 nombre de véhicules par marque
 
@@ -189,73 +201,94 @@ locations par client
 
 durée moyenne des locations
 
-coûts de maintenance par type
+coût des maintenances
 
-Graphiques produits :
+Les données sont analysées via :
 
-histogrammes
+pandas.read_csv()
 
-camemberts
 
-barres verticales
+Graphiques générés avec matplotlib.
 
-Les données sont chargées avec :
+6. Exécution (CLI)
 
-df = pd.read_csv("data/vehicules.csv")
-
- 6. Interface en ligne de commande (CLI)
-
-L’application se lance avec :
+Lancer l’application depuis la racine du projet :
 
 python src/cli.py
 
 
-Menu principal :
+Sous Windows :
 
+py src/cli.py
+
+Menu principal :
 1. Gérer les véhicules
 2. Gérer les utilisateurs
 3. Gérer les locations
 4. Gérer la maintenance
-5. Sauvegarder / Charger
+5. Sauvegarder / Charger les données
 6. Statistiques & Visualisations
 7. Quitter
 
- 
+7.  Données de test
+
+Le fichier :
+
+src/charger_donnees_test.py
 
 
+Ajoute automatiquement :
 
-Installer les Bibliothèque	s :
+3 véhicules
 
-json:Sauvegarde et chargement des données en JSON (véhicules, utilisateurs, locations…)
-csv:Sauvegarde et chargement des données en CSV pour les tableaux ou exports Excel
-matplotlib.pyplot:Création de graphiques (barres, camemberts, lignes) pour visualiser les statistiques
-pandas (optionnel):Manipulation rapide et facile des tableaux de données pour filtrer, trier ou calculer des statistiques
-datetime:Gestion des dates et heures (début et fin des locations, calcul de pénalités)
-os (parfois):Gestion des chemins de fichiers, vérification si un fichier existe
-unittest (pour test.py):Pour tester automatiquement que les classes et fonctions fonctionnent correctement
-math (optionnel):Calculs mathématiques, par exemple pour l’autonomie ou les pourcentages
+2 clients
 
+1 gestionnaire
 
+2 locations (dont une terminée)
 
+Utile pour tester rapidement l’application.
 
+8. Installation
+Prérequis
 
- 11. Conclusion
+Python 3.10 ou plus
 
-Ce projet met en pratique :
+pip installé
 
-Programmation orientée objet complète
-
-Gestion réelle de données (JSON/CSV)
-
-Analyses et visualisations professionnelles
-
-Menu CLI solide
-
-Modularité du code
-
-Possibilité d’extension en GUI (Tkinter)
-
-L’application fournit une solution fonctionnelle et évolutive pour gérer une flotte de véhicules électriques.
+Installer les dépendances :
+pip install pandas matplotlib
 
 
+ou :
 
+pip install -r requirements.txt
+
+9.  Bibliothèques utilisées
+Bibliothèque	Utilité
+json:sauvegarde & chargement JSON
+csv:export CSV
+pandas:statistiques & tableaux
+matplotlib:graphiques
+datetime:gestion des dates
+os	gestion:fichiers locaux
+tkinter:(bonus)	interface graphique
+unittest	tests
+
+11.  Conclusion
+
+Ce projet permet de :
+
+gérer une flotte de véhicules électriques
+
+appliquer pleinement la POO en Python
+
+manipuler des données réelles (JSON/CSV)
+
+produire des analyses et graphiques professionnels
+
+proposer une architecture claire et évolutive
+
+offrir une base solide pour une interface graphique (Tkinter)
+
+Ce README constitue la documentation complète du projet.
