@@ -1,8 +1,7 @@
 
 # Projet Python – Gestion d'une flotte de véhicules électriques
 
-## Description
-
+# Projet Python – Gestion d'une flotte de véhicules électriques
 
 
 Ce projet est une application complète en Python permettant de gérer une flotte de véhicules électriques pour une entreprise de location courte durée.
@@ -20,7 +19,7 @@ Menu CLI interactif
 
  1. Fonctionnalités principales
  
-  -Gestion des véhicules:
+ 🔹Gestion des véhicules:
  
  Ajouter, modifier, supprimer un véhicule.
 Afficher tous les véhicules.
@@ -28,7 +27,7 @@ Rechercher un véhicule par :ID ,modèle,autonomie,statut (disponible / loué / 
 
 Caractéristiques gérées :ID unique auto-incrémenté,marque, modèle,capacité batterie et autonomie estimée,niveau de charge (%),kilométrage,statut du véhicule
 
-- Gestion des utilisateurs
+🔹 Gestion des utilisateurs
 
 Deux types d’utilisateurs :
 
@@ -54,7 +53,7 @@ Utilisateur
  ├── Client
  └── Gestionnaire
 
-- Gestion des locations
+🔹 Gestion des locations
 
 Un client peut louer un véhicule disponible.
 
@@ -78,7 +77,7 @@ Les locations sont stockées sous forme de dictionnaire :
 
 { id_client : [liste des locations] }
 
-- Gestion de la maintenance
+🔹 Gestion de la maintenance
 
 Enregistrer des opérations : date, type, coût.
 
@@ -229,10 +228,49 @@ Menu principal :
  
 
  8. Installation & Exécution
-1)  les dépendances
+
+Python 3.10+
+
+pip (installé par défaut avec Python)
+
+✔ Cloner ou télécharger le projet
+git clone https://github.com/<votre_repo>/flotte-vehicules-electriques-python.git
+cd flotte-vehicules-electriques-python
+
+
+Si vous avez téléchargé un ZIP, extraire puis entrer dans le dossier :
+
+cd flotte-vehicules-electriques-python-main
+
+. Installation des dépendances
+
+Le projet utilise ces modules externes :
+
+Module	Utilité
+pandas	Manipulation et export de données
+matplotlib	Graphiques & statistiques
+csv	Gestion de fichiers CSV
+json	Sauvegarde et chargement JSON
+
+Installer les dépendances :
+
 pip install pandas matplotlib
 
 
+Ou via un fichier requirements.txt (si fourni) :
+
+pip install -r requirements.txt
+
+. Exécution de l’application
+
+Depuis la racine du projet, lancer :
+
+python src/cli.py
+
+
+Sur Windows PowerShell :
+
+py src/cli.py
 
 
  11. Conclusion
