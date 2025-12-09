@@ -1,3 +1,6 @@
+Lyna SIDANE 
+Bilal GHERRAS
+LAMOUREUX Laura
 
 # Projet Python – Gestion d'une flotte de véhicules électriques
 
