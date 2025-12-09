@@ -14,7 +14,7 @@ class TkGUI:
         self.root.geometry("900x600")
         self.flotte = Flotte()
 
-        # --- Menu principal ---
+        # Menu principal 
         frame_menu = tk.Frame(root)
         frame_menu.pack(side=tk.LEFT, fill=tk.Y, padx=5, pady=5)
         tk.Label(frame_menu, text="Menu Principal", font=("Arial", 14, "bold")).pack(pady=5)
@@ -31,7 +31,7 @@ class TkGUI:
         self.frame_central = tk.Frame(root)
         self.frame_central.pack(side=tk.RIGHT, fill=tk.BOTH, expand=True)
 
-    # ------------------------- Véhicules -------------------------
+    # Véhicules 
     def menu_vehicules(self):
         self.clear_frame()
         frame = self.frame_central
@@ -113,7 +113,7 @@ class TkGUI:
         for v in self.flotte.vehicules:
             self.tree_vehicules.insert("", "end", values=(v.id, v.marque, v.modele, v.batterie, v.autonomie, v.niveau_charge, v.kilometrage, v.statut))
 
-    # ------------------------- Utilisateurs -------------------------
+    # Utilisateurs 
     def menu_utilisateurs(self):
         self.clear_frame()
         frame = self.frame_central
@@ -162,7 +162,7 @@ class TkGUI:
             type_u = "client" if isinstance(u, Client) else "gestionnaire"
             self.tree_utilisateurs.insert("", "end", values=(u.id,u.nom,u.email,type_u))
 
-    # ------------------------- Locations -------------------------
+    # Locations
     def menu_locations(self):
         self.clear_frame()
         frame = self.frame_central
@@ -220,7 +220,7 @@ class TkGUI:
         except:
             messagebox.showerror("Erreur","Vérifiez ID client")
 
-    # ------------------------- Maintenance -------------------------
+    # Maintenance 
     def menu_maintenance(self):
         self.clear_frame()
         frame = self.frame_central
@@ -270,7 +270,7 @@ class TkGUI:
         hist = "\n".join([f"Véhicule {m.vehicule_id} | {m.type_op} | Coût {m.cout} | Terminé: {m.terminee} | Date: {m.date}" for m in self.flotte.maintenances])
         messagebox.showinfo("Historique Maintenance", hist)
 
-    # ------------------------- Sauvegarde / Chargement -------------------------
+    #Sauvegarde / Chargement 
     def menu_sauvegarde(self):
         self.clear_frame()
         frame = self.frame_central
@@ -332,7 +332,7 @@ class TkGUI:
         self.refresh_tree_vehicules()
         self.refresh_tree_utilisateurs()
 
-    # ------------------------- Statistiques -------------------------
+    # Statistiques 
     def menu_stats(self):
         self.clear_frame()
         frame=self.frame_central
@@ -342,7 +342,7 @@ class TkGUI:
         canvas.draw()
         canvas.get_tk_widget().pack(fill=tk.BOTH, expand=True)
 
-    # ------------------------- Utilitaires -------------------------
+    #  Utilitaires 
     def clear_frame(self):
         for widget in self.frame_central.winfo_children():
             widget.destroy()
